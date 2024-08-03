@@ -1,0 +1,18 @@
+.login-box{
+    max-width: 320px;
+    border-radius: 5px;
+}
+
+.login-box .card{
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 5px;
+}
+.login-box .card .card-body{
+    padding: 20px 45px 40px 45px;
+    border-radius: 5px;
+}
+
+.toast-top-right {
+    top: 68px;
+    right: 12px;
+}

@@ -1,0 +1,20 @@
+.navbar-blue-dark{
+    background-color: #172554;
+}
+.navbar-blue-dark .navbar-nav .nav-link{
+    color: #fff;
+}
+.bg-blue-dark{
+    background-color: #172554;
+    color: #fff;
+}
+[class*="sidebar-dark-"] {
+    background-color: #172554;
+}
+
+[class*="sidebar-dark"] .btn-sidebar,
+[class*="sidebar-dark"] .form-control-sidebar {
+    background-color: #172554;
+    border: 1px solid #56606a;
+    color: #fff;
+}
