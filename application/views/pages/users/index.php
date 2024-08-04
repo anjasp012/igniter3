@@ -57,23 +57,23 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Full name</th>
+                                                <th>Nama lengkap</th>
                                                 <th>Email</th>
-                                                <th>Gender</th>
-                                                <th>Full address</th>
-                                                <th>Actions</th>
+                                                <th>Jenis kelamin</th>
+                                                <th>Alamat lengkap</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php foreach ($users as $no => $user) : ?>
                                                 <tr>
-                                                    <td><?= $no++ ?></td>
+                                                    <td><?= $no + 1 ?></td>
                                                     <td><?= $user['full_name'] ?></td>
                                                     <td><?= $user['email'] ?></td>
                                                     <td><?= $user['gender'] ?></td>
                                                     <td><?= $user['full_address'] ?></td>
                                                     <td>
-                                                        <a href="<?php echo base_url('users/detail/' . $user['id']) ?>" class="btn btn-sm btn-info px-3"><i class="fas fa-info"></i></a>
+                                                        <a data-full_name="<?= $user['full_name'] ?>" href="<?php echo base_url('users/detail/' . $user['id']) ?>" class="btn btn-sm btn-info btn-detail"><i class="fas fa-info mr-1"></i>Detail</a>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -81,14 +81,15 @@
                                         <tfoot>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Full name</th>
+                                                <th>Nama lengkap</th>
                                                 <th>Email</th>
-                                                <th>Gender</th>
-                                                <th>Full address</th>
+                                                <th>Jenis kelamin</th>
+                                                <th>Alamat lengkap</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </tfoot>
                                     </table>
+
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -173,6 +174,21 @@
                     confirmButtonColor: '#3085d6'
                 });
             <?php endif; ?>
+        });
+    </script>
+    <script src="<?php echo base_url('/assets/js/createModal.js') ?>"></script>
+    <script>
+        $('.btn-detail').click(function(e) {
+            e.preventDefault();
+            var full_name = $(this).data('full_name');
+            var link = $(this).attr('href');
+		    var iframe = '<object type="text/html" data="'+link+'" width="100%" height="99%">No Support</object>'
+            $.createModal({
+                title: `Detail user ${full_name}`,
+                message: iframe,
+                closeButton: true,
+                scrollable: true
+            });
         });
     </script>
 

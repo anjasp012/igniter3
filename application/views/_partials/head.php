@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/jqvmap/jqvmap.min.css') ?>">
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/dist/css/adminlte.min.css') ?>">
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/dist/css/color.css') ?>">
+<link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/dist/css/custom.css') ?>">
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') ?>">
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/daterangepicker/daterangepicker.css') ?>">
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/summernote/summernote-bs4.min.css') ?>">

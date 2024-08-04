@@ -16,3 +16,20 @@
     top: 68px;
     right: 12px;
 }
+
+.full_modal-dialog {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    padding: 5px !important;
+    margin: 0 !important;
+  }
+
+  .full_modal-content {
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: 100% !important;
+  }
