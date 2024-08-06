@@ -7,7 +7,8 @@
 </head>
 
 <body>
-    <form action="<?php echo base_url('users/update/' . $user['id']) ?>" method="post">
+
+    <form id="modal-form" action="<?php echo base_url('users/update/' . $user['id']) ?>" method="post">
         <div class="form-group">
             <label for="login_name">Login name</label>
             <input type="text" class="form-control" id="login_name" name="login_name" placeholder="Login name" value="<?= $user['login_name'] ?>">
@@ -44,12 +45,37 @@
             <label for="full_address">Full adress</label>
             <textarea name="full_address" id="full_address" class="form-control" placeholder="Full address"><?= $user['full_address'] ?></textarea>
         </div>
+        <button id="btn-save" class="btn btn-success" type="submit">Simpan</button>
+        <button id="btn-cancel" type="button" class="btn btn-secondary">Batal</button>
+        <button id="btn-delete" class="btn btn-danger" type="button">Hapus</button>
     </form>
 
     <?php $this->load->view("_partials/js.php") ?>
-    <script src="<?php echo base_url('/assets/adminLTE/dist/js/adminlte.js') ?>"></script>
-    <script src="<?php echo base_url('/assets/adminLTE/dist/js/demo.js') ?>"></script>
     <script src="<?php echo base_url('/assets/adminLTE/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
+
+    <script>
+        var boolChange = false;
+
+        // Detect changes in form fields
+        document.querySelectorAll('#modal-form input, #modal-form select, #modal-form textarea').forEach(function(element) {
+            element.addEventListener('change', function() {
+                boolChange = true;
+                window.parent.postMessage('formChanged', '*');
+            });
+        });
+        <?php if ($this->session->flashdata('message')) : ?>
+            boolChange = false;
+            window.parent.postMessage('submitModal', '*');
+        <?php endif; ?>
+
+        document.getElementById('btn-cancel').addEventListener('click', function() {
+            window.parent.postMessage('closeModal', '*');
+        });
+
+        document.getElementById('btn-delete').addEventListener('click', function() {
+            window.parent.postMessage('deleteModal', '*');
+        });
+    </script>
 
 </body>
 

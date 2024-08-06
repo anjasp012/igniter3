@@ -73,7 +73,7 @@
                                                     <td><?= $user['gender'] ?></td>
                                                     <td><?= $user['full_address'] ?></td>
                                                     <td>
-                                                        <a data-full_name="<?= $user['full_name'] ?>" href="<?php echo base_url('users/detail/' . $user['id']) ?>" class="btn btn-sm btn-info btn-detail"><i class="fas fa-info mr-1"></i>Detail</a>
+                                                        <a data-full_name="<?= $user['full_name'] ?>" data-id="<?php echo $user['id'] ?>" class="btn btn-sm btn-info btn-detail">Detail</a>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -143,52 +143,53 @@
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('.btn-delete').on('click', function(e) {
-                e.preventDefault(); // Prevent the default link behavior
-
-                var url = $(this).data('url'); // Get the URL from the data-url attribute
-
-                // Show SweetAlert confirmation
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'No, cancel!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirect to the URL to perform the deletion
-                        window.location.href = url;
-                    }
-                });
-            });
-            <?php if ($this->session->flashdata('message')) : ?>
-                <?php $message = $this->session->flashdata('message'); ?>
-                Swal.fire({
-                    icon: '<?php echo $message['type']; ?>',
-                    title: '<?php echo $message['type'] === 'success' ? 'Success!' : 'Oops!'; ?>',
-                    text: '<?php echo $message['text']; ?>',
-                    confirmButtonColor: '#3085d6'
-                });
-            <?php endif; ?>
         });
     </script>
     <script src="<?php echo base_url('/assets/js/createModal.js') ?>"></script>
     <script>
+        var bool_change = false;
+        var id = null;
+        var baseUrl = '<?php echo base_url(); ?>';
         $('.btn-detail').click(function(e) {
             e.preventDefault();
             var full_name = $(this).data('full_name');
-            var link = $(this).attr('href');
-		    var iframe = '<object type="text/html" data="'+link+'" width="100%" height="99%">No Support</object>'
+            id = $(this).data('id');
+            var iframe = `<object type="text/html" data="${baseUrl}users/detail/${id}" width="100%" height="99%">No Support</object>`;
             $.createModal({
                 title: `Detail user ${full_name}`,
                 message: iframe,
-                closeButton: true,
+                closeButton: false,
+                editButton: true,
                 scrollable: true
             });
+        });
+        window.addEventListener('message', function(event) {
+            if (event.data === 'formChanged') {
+                bool_change = true;
+            }
+            if (event.data === 'closeModal') {
+                if (bool_change) {
+                    if (confirm('You have unsaved changes. Are you sure you want to close?')) {
+                        bool_change = false; // Reset the flag
+                        $('#Modal').modal('hide'); // Close the modal
+                    }
+                } else {
+                    $('#Modal').modal('hide'); // Close the modal if no unsaved changes
+                }
+            }
+            if (event.data === 'deleteModal') {
+                if (confirm('Are you sure you want to delete?')) {
+                    bool_change = false;
+                    id = id;
+                    $('#Modal').modal('hide');
+                    location.href = `<?php echo base_url('users/delete/'); ?>${id}`;
+                }
+            }
+            if (event.data === 'submitModal') {
+                bool_change = false; // Reset the flag
+                $('#Modal').modal('hide'); // Close the modal
+                location.reload();
+            }
         });
     </script>
 

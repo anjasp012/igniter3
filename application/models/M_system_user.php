@@ -18,20 +18,20 @@ class M_system_user extends CI_model
         return $query->row_array();
     }
 
-    public function set($id_user = null, $data = [])
+    public function set($id = null, $data = [])
     {
         $this->load->helper('url');
-        if ($id_user === null) {
+        if ($id === null) {
             return $this->db->insert('system_user', $data);
         } else {
-            $this->db->where('id_user', $id_user);
+            $this->db->where('id', $id);
             return $this->db->update('system_user', $data);
         }
     }
 
-    public function delete($id_user)
+    public function delete($id)
     {
-        return $this->db->delete('system_user', array('id_user' => $id_user));
+        return $this->db->delete('system_user', array('id' => $id));
     }
 
     // fungsi cek login

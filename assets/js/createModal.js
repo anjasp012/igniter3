@@ -4,10 +4,8 @@
         var settings = $.extend({
             title: "",
             message: "Your Message Goes Here!",
-            closeButton: false,
-            editButton: false,
-            deleteButton: false,
-            scrollable: false
+            scrollable: false,
+            onClose: null
         }, options);
 
         // Create modal HTML
@@ -17,18 +15,11 @@
                     <form class="modal-content full_modal-content">
                         <div class="modal-header">
                             ${settings.title ? `<h5 class="modal-title">${settings.title}</h5>` : ''}
-                            ${settings.closeButton ? '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' : ''}
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
                             ${settings.message}
                         </div>
-                        ${(settings.closeButton || settings.editButton || settings.deleteButton) ? `
-                            <div class="modal-footer">
-                                ${settings.closeButton ? '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' : ''}
-                                ${settings.editButton ? '<button type="button" class="btn btn-primary">Edit</button>' : ''}
-                                ${settings.deleteButton ? '<button type="button" class="btn btn-danger">Delete</button>' : ''}
-                            </div>
-                        ` : ''}
                     </form>
                 </div>
             </div>
@@ -36,8 +27,22 @@
 
         // Append modal HTML to the body and show the modal
         $('body').append(modalHtml);
-        $('#Modal').modal().on('hidden.bs.modal', function() {
+        var $modal = $('#Modal').modal();
+
+        // Event listener for modal close
+        $modal.on('hidden.bs.modal', function() {
             $(this).remove();
+        });
+
+        // Handle close button click
+        $('.close').on('click', function(e) {
+            e.preventDefault();
+            window.parent.postMessage('closeModal', '*');
+        });
+
+        // Handle custom close button click
+        $('#modal-close').on('click', function() {
+            window.parent.postMessage('closeModal', '*');
         });
     };
 })(jQuery);

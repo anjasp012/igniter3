@@ -36,18 +36,18 @@ class Users extends CI_Controller
         $data['user'] = $this->M_system_user->get($id);
         $this->load->view('pages/users/edit', $data);
     }
-    public function update($id_user)
+    public function update($id)
     {
         //load view form login
-        $user = $this->M_system_user->get_users($id_user);
+        $user = $this->M_system_user->get($id);
         $data = [
-            'nama' => $this->input->post('nama'),
+            'full_name' => $this->input->post('full_name'),
             'email' => $this->input->post('email'),
-            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-            'alamat' => $this->input->post('alamat'),
-            'password' => $this->input->post('password') != null ? password_hash($this->input->post('password'), PASSWORD_DEFAULT) : $user['password'],
+            'gender' => $this->input->post('gender'),
+            'full_address' => $this->input->post('full_address'),
+            'passwd' => $this->input->post('password') != null ? password_hash($this->input->post('password'), PASSWORD_DEFAULT) : $user['passwd'],
         ];
-        $updated = $this->M_system_user->set_user($id_user, $data);
+        $updated = $this->M_system_user->set($id, $data);
 
         if ($updated) {
             // Set a flash message for success
@@ -62,12 +62,12 @@ class Users extends CI_Controller
                 'text' => 'Failed to update user.'
             ]);
         }
-        redirect('/users');
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function delete($id_user)
+    public function delete($id)
     {
-        $deleted = $this->M_system_user->delete_user($id_user);
+        $deleted = $this->M_system_user->delete($id);
 
         if ($deleted) {
             // Set a flash message for success
