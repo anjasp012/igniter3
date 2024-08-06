@@ -41,9 +41,12 @@ class Users extends CI_Controller
         //load view form login
         $user = $this->M_system_user->get($id);
         $data = [
+            'login_name' => $this->input->post('login_name'),
             'full_name' => $this->input->post('full_name'),
             'email' => $this->input->post('email'),
             'gender' => $this->input->post('gender'),
+            'place_of_birth' => $this->input->post('place_of_birth'),
+            'date_of_birth' => $this->input->post('date_of_birth'),
             'full_address' => $this->input->post('full_address'),
             'passwd' => $this->input->post('password') != null ? password_hash($this->input->post('password'), PASSWORD_DEFAULT) : $user['passwd'],
         ];
