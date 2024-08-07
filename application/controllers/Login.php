@@ -29,13 +29,22 @@ class Login extends CI_Controller
         $ranges = preg_split('/[,;]\s*/', $allowed_ranges);
 
         foreach ($ranges as $allowed_range) {
-            // Buat pola regex dari rentang IP
-            $pattern = str_replace('*', '\d{1,3}', preg_quote($allowed_range, '/'));
-            $pattern = '/^' . $pattern . '$/';
-
-            // Periksa apakah IP klien cocok dengan pola
-            if (preg_match($pattern, $client_ip)) {
+            if ($allowed_range === '*') {
                 return true;
+            }
+            if (strpos($allowed_range, '*') !== false) {
+                $allowed_prefix = str_replace('*', '', $allowed_range);
+                $client_prefix = substr($client_ip, 0, strlen($allowed_prefix));
+
+                if ($client_prefix === $allowed_prefix) {
+                    return true;
+                }
+            } else {
+                $pattern = str_replace('*', '\d{1,3}', preg_quote($allowed_range, '/'));
+                $pattern = '/^' . $pattern . '$/';
+                if (preg_match($pattern, $client_ip)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -54,11 +63,11 @@ class Login extends CI_Controller
         if (!empty($cek)) {
 
             foreach ($cek as $user) {
-                if ($user->ip_address != '*' || $user->ip_address != null) {
-                    $user_ip_address = $user->ip_address;
-                    if (!$this->is_ip_allowed(getClientIP(), $user_ip_address)) {
+                if (isset($user->ip_address) && $user->ip_address !== '*') {
+                    if (!$this->is_ip_allowed(getClientIP(), $user->ip_address)) {
                         $response['success'] = false;
                         $response['message'] = 'Akses tidak diizinkan dari IP saat ini.';
+                        $response['clientIp'] = getClientIP();
                         echo json_encode($response);
                         return;
                     }
@@ -103,9 +112,8 @@ class Login extends CI_Controller
 
         if (!empty($cek)) {
             foreach ($cek as $user) {
-                if ($user->ip_address != '*' || $user->ip_address != null) {
-                    $user_ip_address = $user->ip_address;
-                    if (!$this->is_ip_allowed(getClientIP(), $user_ip_address)) {
+                if (isset($user->ip_address) && $user->ip_address !== '*') {
+                    if (!$this->is_ip_allowed(getClientIP(), $user->ip_address)) {
                         $this->session->set_flashdata('message', [
                             'type' => 'error',
                             'text' => 'Akses tidak diperbolehkan dari IP ini.'
@@ -137,9 +145,8 @@ class Login extends CI_Controller
             if ($register) {
                 $cek = $this->M_system_user->check_auth_google($google_id);
                 foreach ($cek as $user) {
-                    if ($user->ip_address != '*' || $user->ip_address != null) {
-                        $user_ip_address = $user->ip_address;
-                        if (!$this->is_ip_allowed(getClientIP(), $user_ip_address)) {
+                    if (isset($user->ip_address) && $user->ip_address !== '*') {
+                        if (!$this->is_ip_allowed(getClientIP(), $user->ip_address)) {
                             $this->session->set_flashdata('message', [
                                 'type' => 'error',
                                 'text' => 'Akses tidak diperbolehkan dari IP ini.'
