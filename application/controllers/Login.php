@@ -33,10 +33,10 @@ class Login extends CI_Controller
                 return true;
             }
             if (strpos($allowed_range, '*') !== false) {
-                $pattern = str_replace('*', '\d{1,3}', preg_quote($allowed_range, '/'));
-                $pattern = '/^' . $pattern . '$/';
+                $allowed_prefix = str_replace('*', '', $allowed_range);
+                $client_prefix = substr($client_ip, 0, strlen($allowed_prefix));
 
-                if (preg_match($pattern, $client_ip)) {
+                if ($client_prefix === $allowed_prefix) {
                     return true;
                 }
             } else {
