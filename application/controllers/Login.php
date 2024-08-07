@@ -24,11 +24,21 @@ class Login extends CI_Controller
         $this->load->view('auth/login', $data);
     }
 
-    private function is_ip_allowed($client_ip, $allowed_range)
+    private function is_ip_allowed($client_ip, $allowed_ranges)
     {
-        $pattern = str_replace('*', '\d{1,3}', preg_quote($allowed_range, '/'));
-        $pattern = '/^' . $pattern . '$/';
-        return preg_match($pattern, $client_ip);
+        $ranges = preg_split('/[,;]\s*/', $allowed_ranges);
+
+        foreach ($ranges as $allowed_range) {
+            // Buat pola regex dari rentang IP
+            $pattern = str_replace('*', '\d{1,3}', preg_quote($allowed_range, '/'));
+            $pattern = '/^' . $pattern . '$/';
+
+            // Periksa apakah IP klien cocok dengan pola
+            if (preg_match($pattern, $client_ip)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function check_auth()
