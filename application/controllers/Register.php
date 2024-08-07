@@ -23,6 +23,14 @@ class Register extends CI_Controller
     {
         $this->load->model('M_system_user');
 
+        // Cek apakah email sudah ada di database
+        if ($this->is_email_exists($this->input->post('email'))) {
+            $response['success'] = false;
+            $response['message'] = 'Email sudah terdaftar, gunakan email lain.';
+            echo json_encode($response);
+            return;
+        }
+
         $data = [
             'id' => getId(),
             'full_name' => $this->input->post('full_name'),
@@ -33,9 +41,26 @@ class Register extends CI_Controller
         $register = $this->db->insert('system_user', $data);
 
         if ($register) {
-            echo 'success';
+            $response['success'] = true;
+            $response['message'] = 'Anda akan di arahkan ke halaman login dalam 3 Detik.';
+            echo json_encode($response);
+            return;
         } else {
-            echo 'error';
+            $response['success'] = false;
+            $response['message'] = 'registrasi gagal, silahkan coba lagi.';
+            echo json_encode($response);
+            return;
         }
+    }
+
+    private function is_email_exists($email)
+    {
+        $this->db->select('id');
+        $this->db->from('system_user');
+        $this->db->where('email', $email);
+        $query = $this->db->get();
+
+        // Jika ada hasil, email sudah ada
+        return $query->num_rows() > 0;
     }
 }

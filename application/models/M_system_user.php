@@ -57,11 +57,11 @@ class M_system_user extends CI_model
         }
     }
     // fungsi cek login google
-    function check_auth_google($google_id_user)
+    function check_auth_google($google_id)
     {
         $this->db->select("*");
         $this->db->from("system_user");
-        $this->db->where("google_id_user", $google_id_user);
+        $this->db->where("google_id", $google_id);
         $query = $this->db->get();
         $user = $query->row();
 

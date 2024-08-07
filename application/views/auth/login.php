@@ -106,8 +106,9 @@
 
 
                         success: function(response) {
+                            var response = JSON.parse(response);
 
-                            if (response == "success") {
+                            if (response.success) {
                                 $('.btn-login').html(`<i class="fas fa-check"></i>`);
                                 $('.btn-login').attr('disabled', true);
                                 toastr.success('<div class="toast-title">Login Berhasil!</div><div class="toast-message">Anda akan di arahkan dalam 3 Detik</div>')
@@ -117,7 +118,7 @@
 
                             } else {
                                 $('.btn-login').html(`MASUK`);
-                                toastr.error('<div class="toast-title">Peringatan</div><div class="toast-message">silahkan coba lagi</div>')
+                                toastr.error(`<div class="toast-title">Peringatan</div><div class="toast-message">${response.message}</div>`)
                             }
 
                         },
@@ -133,6 +134,11 @@
             });
 
         });
+
+        <?php if ($this->session->flashdata('message')) : ?>
+            <?php $message = $this->session->flashdata('message'); ?>
+            toastr.error(`<div class="toast-title">Peringatan</div><div class="toast-message"><?= $message['text'] ?></div>`)
+        <?php endif; ?>
     </script>
 
 </body>

@@ -36,7 +36,7 @@
             <!-- /.login-logo -->
             <div class="card">
                 <div class="card-body login-card-body">
-                    <form action="">
+                    <form id="form-register" action="">
                         <img src="<?php echo base_url('/assets/adminLTE/dist/img/picture_login.jpg') ?>" width="100%">
                         <p class="text-center mt-2" style="font-size: 14px;color: #333;"><b>Silahkan Register</b></p>
 
@@ -64,7 +64,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-block btn-dark btn-register" style="font-weight: 600;font-size: 14px;background-color: #172554;">
+                        <button type="submit" class="btn btn-block btn-dark btn-register" style="font-weight: 600;font-size: 14px;background-color: #172554;">
                             REGISTER
                         </button>
                         <p class="text-center" style="margin-bottom: 10px;"><small>Sudah punya akun? <a href="<?php echo base_url() ?>login" id="daftar-mode">Kesini
@@ -84,9 +84,9 @@
     <script src="<?php echo base_url('/assets/adminLTE/dist/js/adminlte.js') ?>"></script>
     <script>
         $(document).ready(function() {
-            $(".btn-register").click(function() {
+            $("#form-register").submit(function(e) {
 
-
+                e.preventDefault();
                 var full_name = $("#full_name").val();
                 var email = $("#email").val();
                 var passwd = $("#passwd").val();
@@ -101,7 +101,7 @@
                     toastr.warning('<div class="toast-title">Peringatan</div><div class="toast-message">Silahkan mengisi password</div>')
 
                 } else {
-
+                    $('.btn-register').html(`<div class="spinner-border" style="width: 16px;height: 16px;" role="status"></div>`);
                     $.ajax({
 
                         url: "<?php echo base_url() ?>register/store",
@@ -113,17 +113,18 @@
                         },
 
                         success: function(response) {
-
-                            if (response == "success") {
-
-                                toastr.success('<div class="toast-title">Register Berhasil!</div><div class="toast-message">Anda akan di arahkan ke halaman login dalam 3 Detik</div>')
+                            var response = JSON.parse(response)
+                            if (response.success) {
+                                $('.btn-register').html(`<i class="fas fa-check"></i>`);
+                                $('.btn-register').attr('disabled', true);
+                                toastr.success(`<div class="toast-title">Register Berhasil!</div><div class="toast-message">${response.message}</div>`)
                                 setTimeout(function() {
                                     window.location.href = '<?php echo base_url() ?>login';
                                 }, 3000);
 
                             } else {
-
-                                toastr.error('<div class="toast-title">Peringatan</div><div class="toast-message">silahkan coba lagi</div>')
+                                $('.btn-register').html(`REGISTER`);
+                                toastr.error(`<div class="toast-title">Peringatan</div><div class="toast-message">${response.message}</div>`)
                             }
 
                         },

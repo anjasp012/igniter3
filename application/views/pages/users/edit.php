@@ -45,6 +45,10 @@
             <label for="full_address">Full adress</label>
             <textarea name="full_address" id="full_address" class="form-control" placeholder="Full address"><?= $user['full_address'] ?></textarea>
         </div>
+        <div class="form-group">
+            <label for="ip_address">IP Address</label>
+            <textarea name="ip_address" id="ip_address" class="form-control" placeholder="IP Address"><?= $user['ip_address'] ?></textarea>
+        </div>
         <button id="btn-save" class="btn btn-success" type="submit">Simpan</button>
         <button id="btn-cancel" type="button" class="btn btn-secondary">Batal</button>
         <button id="btn-delete" class="btn btn-danger" type="button">Hapus</button>
