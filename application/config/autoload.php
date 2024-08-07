@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'getId', 'getClientIP', 'googleAuth');
+$autoload['helper'] = array('url', 'get_id', 'get_client_ip', 'google_auth');
 
 /*
 | -------------------------------------------------------------------
