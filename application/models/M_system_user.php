@@ -35,11 +35,12 @@ class M_system_user extends CI_model
     }
 
     // fungsi cek login
-    function check_auth($email, $password)
+    function check_auth($username, $password)
     {
         $this->db->select("*");
         $this->db->from("system_user");
-        $this->db->where("email", $email);
+        $this->db->where("email", $username);
+        $this->db->or_where("login_name", $username);
         $query = $this->db->get();
         $user = $query->row();
 

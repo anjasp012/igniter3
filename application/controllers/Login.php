@@ -54,11 +54,11 @@ class Login extends CI_Controller
     {
         $this->load->model('M_system_user');
 
-        $email = $this->input->post('email');
+        $username = $this->input->post('username');
         $password = $this->input->post('password');
 
         //cek login via model
-        $cek = $this->M_system_user->check_auth($email, $password);
+        $cek = $this->M_system_user->check_auth($username, $password);
 
         if (!empty($cek)) {
 

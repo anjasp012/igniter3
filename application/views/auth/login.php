@@ -40,7 +40,7 @@
                         <p class="text-center mt-2" style="font-size: 14px;color: #333;"><b>Silahkan Login</b></p>
 
                         <div class="input-group mb-3">
-                            <input type="email" id="email" class="form-control" placeholder="Email">
+                            <input type="text" id="username" class="form-control" placeholder="Email/Username">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-envelope"></span>
@@ -84,11 +84,11 @@
         $(document).ready(function() {
             $("#form-login").submit(function(e) {
                 e.preventDefault();
-                var email = $("#email").val();
+                var username = $("#username").val();
                 var password = $("#password").val();
 
-                if (email.length == "") {
-                    toastr.warning('<div class="toast-title">Peringatan</div><div class="toast-message">Silahkan mengisi Email</div>')
+                if (username.length == "") {
+                    toastr.warning('<div class="toast-title">Peringatan</div><div class="toast-message">Silahkan mengisi Email/Username</div>')
 
                 } else if (password.length == "") {
 
@@ -100,7 +100,7 @@
                         url: "<?php echo base_url() ?>login/check_auth",
                         type: "POST",
                         data: {
-                            "email": email,
+                            "username": username,
                             "password": password
                         },
 
