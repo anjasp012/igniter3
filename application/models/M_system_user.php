@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_system_user extends CI_model
 {
     protected $table = 'system_user';
-    protected $column_order = array('full_name', 'email', 'gender', 'full_address');
+    protected $column_order = array(null,'full_name', 'email', 'gender', 'full_address');
     protected $column_search = array('full_name', 'email', 'gender', 'full_address');
     protected $order = array('full_name' => 'desc');
 

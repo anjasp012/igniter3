@@ -196,13 +196,13 @@
                         bool_change = false;
                         id = id;
                         $('#Modal').modal('hide');
-                        location.href = `<?php echo base_url('users/delete/'); ?>${id}`;
+                        table.ajax.reload();
                     }
                 }
                 if (event.data === 'submitModal') {
                     bool_change = false; // Reset the flag
                     $('#Modal').modal('hide'); // Close the modal
-                    location.reload();
+                    table.ajax.reload();
                 }
             });
         });
