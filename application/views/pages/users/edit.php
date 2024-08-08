@@ -61,25 +61,51 @@
         var boolChange = false;
 
         // Detect changes in form fields
-        document.querySelectorAll('#modal-form input, #modal-form select, #modal-form textarea').forEach(function(element) {
-            element.addEventListener('change', function() {
-                boolChange = true;
-                window.parent.postMessage('formChanged', '*');
+        $('#modal-form input, #modal-form select, #modal-form textarea').on('change', function() {
+            boolChange = true;
+            window.parent.postMessage('formChanged', '*');
+        });
+
+        $('#modal-form').submit(function(e) {
+            e.preventDefault();
+            var form = $(this);
+            var formData = form.serialize(); // Serialize form data
+            $('#btn-save').html(`<div class="spinner-border" style="width: 16px;height: 16px;" role="status"></div>`);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    var response = JSON.parse(response);
+
+                    if (response.success) {
+                        boolChange = false;
+                        window.parent.postMessage('submitModal', '*');
+                        $('.btn-save').html(`<i class="fas fa-check"></i>`);
+                        $('.btn-save').attr('disabled', true);
+
+                    } else {
+                        $('.btn-save').html(`Simpan`);
+                    }
+                },
             });
         });
 
-        document.getElementById('btn-save').addEventListener('click', function() {
-            boolChange = false;
-            window.parent.postMessage('submitModal', '*');
-        });
-
-        document.getElementById('btn-cancel').addEventListener('click', function() {
+        $('#btn-delete').click(function() {
+            if (confirm('Are you sure you want to delete?')) {
+                boolChange = false;
+                $.ajax({
+                    url: `<?php echo base_url('users/delete/' . $user['id']); ?>`,
+                    dataType: 'json',
+                    success: function(response) {
+                        window.parent.postMessage('deleteModal', '*');
+                    },
+                });
+            }
+        })
+        $('#btn-cancel').click(function() {
             window.parent.postMessage('closeModal', '*');
-        });
-
-        document.getElementById('btn-delete').addEventListener('click', function() {
-            window.parent.postMessage('deleteModal', '*');
-        });
+        })
     </script>
 
 </body>

@@ -193,21 +193,10 @@
                 }
             }
             if (event.data === 'deleteModal') {
-                if (confirm('Are you sure you want to delete?')) {
-                    bool_change = false;
-                    id = id;
-                    $('#Modal').modal('hide');
-                    $.ajax({
-                        url: `<?php echo base_url('users/delete/'); ?>${id}`,
-                        dataType: 'json',
-                        success: function(response) {
-                            table.ajax.reload();
-                        },
-                    });
-                }
+                $('#Modal').modal('hide');
+                table.ajax.reload();
             }
             if (event.data === 'submitModal') {
-                bool_change = false; // Reset the flag
                 $('#Modal').modal('hide'); // Close the modal
                 table.ajax.reload();
             }
