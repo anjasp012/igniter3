@@ -67,10 +67,11 @@
                 window.parent.postMessage('formChanged', '*');
             });
         });
-        <?php if ($this->session->flashdata('message')) : ?>
+
+        document.getElementById('btn-save').addEventListener('click', function() {
             boolChange = false;
             window.parent.postMessage('submitModal', '*');
-        <?php endif; ?>
+        });
 
         document.getElementById('btn-cancel').addEventListener('click', function() {
             window.parent.postMessage('closeModal', '*');

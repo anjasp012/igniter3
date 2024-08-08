@@ -161,56 +161,56 @@
             });
 
 
-            var bool_change = false;
-            var id = null;
-            var baseUrl = '<?php echo base_url(); ?>';
-            $(document).on('click', '.btn-detail', function(e) {
-                e.preventDefault();
-                var full_name = $(this).data('full_name');
-                id = $(this).data('id');
-                var iframe = `<object type="text/html" data="${baseUrl}users/detail/${id}" width="100%" height="99%">No Support</object>`;
-                $.createModal({
-                    title: `Detail user ${full_name}`,
-                    message: iframe,
-                    closeButton: false,
-                    editButton: true,
-                    scrollable: true
-                });
+        });
+        var bool_change = false;
+        var id = null;
+        var baseUrl = '<?php echo base_url(); ?>';
+        $(document).on('click', '.btn-detail', function(e) {
+            e.preventDefault();
+            var full_name = $(this).data('full_name');
+            id = $(this).data('id');
+            var iframe = `<object type="text/html" data="${baseUrl}users/detail/${id}" width="100%" height="99%">No Support</object>`;
+            $.createModal({
+                title: `Detail user ${full_name}`,
+                message: iframe,
+                closeButton: false,
+                editButton: true,
+                scrollable: true
             });
-            window.addEventListener('message', function(event) {
-                if (event.data === 'formChanged') {
-                    bool_change = true;
-                }
-                if (event.data === 'closeModal') {
-                    if (bool_change) {
-                        if (confirm('You have unsaved changes. Are you sure you want to close?')) {
-                            bool_change = false; // Reset the flag
-                            $('#Modal').modal('hide'); // Close the modal
-                        }
-                    } else {
-                        $('#Modal').modal('hide'); // Close the modal if no unsaved changes
+        });
+        window.addEventListener('message', function(event) {
+            if (event.data === 'formChanged') {
+                bool_change = true;
+            }
+            if (event.data === 'closeModal') {
+                if (bool_change) {
+                    if (confirm('You have unsaved changes. Are you sure you want to close?')) {
+                        bool_change = false; // Reset the flag
+                        $('#Modal').modal('hide'); // Close the modal
                     }
+                } else {
+                    $('#Modal').modal('hide'); // Close the modal if no unsaved changes
                 }
-                if (event.data === 'deleteModal') {
-                    if (confirm('Are you sure you want to delete?')) {
-                        bool_change = false;
-                        id = id;
-                        $('#Modal').modal('hide');
-                        $.ajax({
-                            url: `<?php echo base_url('users/delete/'); ?>${id}`,
-                            dataType: 'json',
-                            success: function(response) {
-                                table.ajax.reload();
-                            },
-                        });
-                    }
+            }
+            if (event.data === 'deleteModal') {
+                if (confirm('Are you sure you want to delete?')) {
+                    bool_change = false;
+                    id = id;
+                    $('#Modal').modal('hide');
+                    $.ajax({
+                        url: `<?php echo base_url('users/delete/'); ?>${id}`,
+                        dataType: 'json',
+                        success: function(response) {
+                            table.ajax.reload();
+                        },
+                    });
                 }
-                if (event.data === 'submitModal') {
-                    bool_change = false; // Reset the flag
-                    $('#Modal').modal('hide'); // Close the modal
-                    table.ajax.reload();
-                }
-            });
+            }
+            if (event.data === 'submitModal') {
+                bool_change = false; // Reset the flag
+                $('#Modal').modal('hide'); // Close the modal
+                table.ajax.reload();
+            }
         });
     </script>
 
