@@ -197,6 +197,7 @@
                 table.ajax.reload();
             }
             if (event.data === 'submitModal') {
+                bool_change = false; // Reset the flag
                 $('#Modal').modal('hide'); // Close the modal
                 table.ajax.reload();
             }
