@@ -21,8 +21,44 @@ class Users extends CI_Controller
     public function index()
     {
         //load view form login
-        $data['users'] = $this->M_system_user->get();
-        $this->load->view('pages/users/index', $data);
+        $this->load->view('pages/users/index');
+    }
+    public function data_table()
+    {
+        if ($this->input->is_ajax_request() == true) {
+
+            $datatable = $this->M_system_user->get_datatables();
+
+            $data = array();
+            $no   = @$_POST['start'];
+
+            foreach ($datatable as $n) {
+
+                $no++;
+                $row    = array();
+
+                $row[]  = $no;
+                $row[]  = $n->full_name;
+                $row[]  = $n->email;
+                $row[]  = $n->gender;
+                $row[]  = $n->full_address;
+                $row[]  = '
+                        <a data-full_name="'.$n->full_name.'" data-id="'.$n->id.'" class="btn btn-sm btn-info btn-detail">Detail</a>
+                    ';
+                $data[] = $row;
+            }
+
+            $output = array(
+                "draw"              => $_POST['draw'],
+                "recordsTotal"      => $this->M_system_user->count_all(),
+                "recordsFiltered"   => $this->M_system_user->count_filtered(),
+                "data"              => $data,
+            );
+
+            $this->output->set_content_type('application/json')->set_output(json_encode($output, 200));
+        } else {
+            exit('Ajax say:: Maaf data tidak bisa ditampilkan, lihat Web Developer!');
+        }
     }
     public function detail($id)
     {

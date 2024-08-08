@@ -6,3 +6,12 @@
     $.widget.bridge('uibutton', $.ui.button)
 </script>
 <script src="<?php echo base_url('/assets/adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+
+<script>
+    $('#logout').on('click', function(event) {
+        event.preventDefault();
+        if (confirm('Are you sure you want to log out?')) {
+            window.location.href = '<?= base_url('logout') ?>';
+        }
+    });
+</script>

@@ -49,7 +49,10 @@
 
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">DataTable with default features</h3>
+                                    <div class="d-flex justify-content-between w-100">
+                                        <h3 class="card-title">Lists user</h3>
+                                        <div class="btn btn-dark btn-sm" id="reload"> <i class="far fa-circle mr-1"></i>Reload</div>
+                                    </div>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
@@ -64,20 +67,6 @@
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php foreach ($users as $no => $user) : ?>
-                                                <tr>
-                                                    <td><?= $no + 1 ?></td>
-                                                    <td><?= $user['full_name'] ?></td>
-                                                    <td><?= $user['email'] ?></td>
-                                                    <td><?= $user['gender'] ?></td>
-                                                    <td><?= $user['full_address'] ?></td>
-                                                    <td>
-                                                        <a data-full_name="<?= $user['full_name'] ?>" data-id="<?php echo $user['id'] ?>" class="btn btn-sm btn-info btn-detail">Detail</a>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th>No</th>
@@ -135,61 +124,87 @@
     <script src="<?php echo base_url('/assets/adminLTE/dist/js/demo.js') ?>"></script>
     <script src="<?php echo base_url('/assets/adminLTE/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
 
-    <script>
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
-    </script>
     <script src="<?php echo base_url('/assets/js/createModal.js') ?>"></script>
     <script>
-        var bool_change = false;
-        var id = null;
-        var baseUrl = '<?php echo base_url(); ?>';
-        $('.btn-detail').click(function(e) {
-            e.preventDefault();
-            var full_name = $(this).data('full_name');
-            id = $(this).data('id');
-            var iframe = `<object type="text/html" data="${baseUrl}users/detail/${id}" width="100%" height="99%">No Support</object>`;
-            $.createModal({
-                title: `Detail user ${full_name}`,
-                message: iframe,
-                closeButton: false,
-                editButton: true,
-                scrollable: true
+        // let table;
+        $(document).ready(function() {
+            table = $('#example1').DataTable({
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "lengthChange": true,
+                "ordering": true,
+                "searching": true,
+                "autoWidth": false,
+                "info": true,
+                "order": [],
+
+                "ajax": {
+                    "url": "<?php echo base_url('users/data_table'); ?>",
+                    "type": "POST"
+                },
+
+                "columnDefs": [{
+                    "targets": [0],
+                    "orderable": false,
+                    "className": 'text-center',
+                }],
+
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
             });
-        });
-        window.addEventListener('message', function(event) {
-            if (event.data === 'formChanged') {
-                bool_change = true;
-            }
-            if (event.data === 'closeModal') {
-                if (bool_change) {
-                    if (confirm('You have unsaved changes. Are you sure you want to close?')) {
-                        bool_change = false; // Reset the flag
-                        $('#Modal').modal('hide'); // Close the modal
+
+            $('#reload').on('click', function() {
+                table.ajax.reload(); // Memuat ulang data dari server
+            });
+
+
+            var bool_change = false;
+            var id = null;
+            var baseUrl = '<?php echo base_url(); ?>';
+            $(document).on('click', '.btn-detail', function(e) {
+                e.preventDefault();
+                var full_name = $(this).data('full_name');
+                id = $(this).data('id');
+                var iframe = `<object type="text/html" data="${baseUrl}users/detail/${id}" width="100%" height="99%">No Support</object>`;
+                $.createModal({
+                    title: `Detail user ${full_name}`,
+                    message: iframe,
+                    closeButton: false,
+                    editButton: true,
+                    scrollable: true
+                });
+            });
+            window.addEventListener('message', function(event) {
+                if (event.data === 'formChanged') {
+                    bool_change = true;
+                }
+                if (event.data === 'closeModal') {
+                    if (bool_change) {
+                        if (confirm('You have unsaved changes. Are you sure you want to close?')) {
+                            bool_change = false; // Reset the flag
+                            $('#Modal').modal('hide'); // Close the modal
+                        }
+                    } else {
+                        $('#Modal').modal('hide'); // Close the modal if no unsaved changes
                     }
-                } else {
-                    $('#Modal').modal('hide'); // Close the modal if no unsaved changes
                 }
-            }
-            if (event.data === 'deleteModal') {
-                if (confirm('Are you sure you want to delete?')) {
-                    bool_change = false;
-                    id = id;
-                    $('#Modal').modal('hide');
-                    location.href = `<?php echo base_url('users/delete/'); ?>${id}`;
+                if (event.data === 'deleteModal') {
+                    if (confirm('Are you sure you want to delete?')) {
+                        bool_change = false;
+                        id = id;
+                        $('#Modal').modal('hide');
+                        location.href = `<?php echo base_url('users/delete/'); ?>${id}`;
+                    }
                 }
-            }
-            if (event.data === 'submitModal') {
-                bool_change = false; // Reset the flag
-                $('#Modal').modal('hide'); // Close the modal
-                location.reload();
-            }
+                if (event.data === 'submitModal') {
+                    bool_change = false; // Reset the flag
+                    $('#Modal').modal('hide'); // Close the modal
+                    location.reload();
+                }
+            });
         });
     </script>
 

@@ -65,7 +65,6 @@
                         <p>
                             Layout Options
                             <i class="fas fa-angle-left right"></i>
-                            <span class="badge badge-info right">6</span>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -283,7 +282,6 @@
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
                             Calendar
-                            <span class="badge badge-info right">2</span>
                         </p>
                     </a>
                 </li>
@@ -631,13 +629,6 @@
                     <a href="#" class="nav-link">
                         <i class="fas fa-circle nav-icon"></i>
                         <p>Level 1</p>
-                    </a>
-                </li>
-                <li class="nav-header">Actions</li>
-                <li class="nav-item">
-                    <a href="<?php echo base_url('logout') ?>" class="nav-link">
-                        <i class="nav-icon far fa-circle text-danger"></i>
-                        <p class="text">Logout</p>
                     </a>
                 </li>
             </ul>
