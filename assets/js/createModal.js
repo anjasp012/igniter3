@@ -15,7 +15,7 @@
                     <form class="modal-content full_modal-content">
                         <div class="modal-header">
                             ${settings.title ? `<h5 class="modal-title">${settings.title}</h5>` : ''}
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
                             ${settings.message}
@@ -30,9 +30,6 @@
         var $modal = $('#Modal').modal();
 
         // Event listener for modal close
-        $modal.on('hidden.bs.modal', function() {
-            $(this).remove();
-        });
 
         // Handle close button click
         $('.close').on('click', function(e) {
@@ -40,9 +37,11 @@
             window.parent.postMessage('closeModal', '*');
         });
 
-        // Handle custom close button click
-        $('#modal-close').on('click', function() {
+        $('.modal-backdrop').on('click', function(e) {
+            console.log('adadad');
+
+            e.preventDefault();
             window.parent.postMessage('closeModal', '*');
-        });
+        })
     };
 })(jQuery);
