@@ -196,7 +196,13 @@
                         bool_change = false;
                         id = id;
                         $('#Modal').modal('hide');
-                        table.ajax.reload();
+                        $.ajax({
+                            url: `<?php echo base_url('users/delete/'); ?>${id}`,
+                            dataType: 'json',
+                            success: function(response) {
+                                table.ajax.reload();
+                            },
+                        });
                     }
                 }
                 if (event.data === 'submitModal') {

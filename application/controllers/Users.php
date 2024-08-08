@@ -88,40 +88,13 @@ class Users extends CI_Controller
             'passwd' => $this->input->post('password') != null ? password_hash($this->input->post('password'), PASSWORD_DEFAULT) : $user['passwd'],
         ];
         $updated = $this->M_system_user->set($id, $data);
-
-        if ($updated) {
-            // Set a flash message for success
-            $this->session->set_flashdata('message', [
-                'type' => 'success',
-                'text' => 'User updated successfully!'
-            ]);
-        } else {
-            // Set a flash message for error
-            $this->session->set_flashdata('message', [
-                'type' => 'error',
-                'text' => 'Failed to update user.'
-            ]);
-        }
-        redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function delete($id)
     {
-        $deleted = $this->M_system_user->delete($id);
-
-        if ($deleted) {
-            // Set a flash message for success
-            $this->session->set_flashdata('message', [
-                'type' => 'success',
-                'text' => 'User deleted successfully!'
-            ]);
-        } else {
-            // Set a flash message for error
-            $this->session->set_flashdata('message', [
-                'type' => 'error',
-                'text' => 'Failed to delete user.'
-            ]);
-        }
-        redirect('/users');
+        $this->M_system_user->delete($id);
+        $response['success'] = true;
+        echo json_encode($response);
+        return;
     }
 }
