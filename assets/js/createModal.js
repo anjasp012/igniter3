@@ -27,21 +27,29 @@
 
         // Append modal HTML to the body and show the modal
         $('body').append(modalHtml);
-        var $modal = $('#Modal').modal();
+        var $modal = $('#Modal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
 
         // Event listener for modal close
+        $modal.on('hidden.bs.modal', function() {
+            $(this).remove();
+        });
+
+
+          // Mengatasi penutupan modal secara manual (misalnya tombol tutup)
+          $modal.on('hidePrevented.bs.modal', function(e) {
+            e.preventDefault();
+            window.parent.postMessage('closeModal', '*');
+
+          });
+
 
         // Handle close button click
         $('.close').on('click', function(e) {
             e.preventDefault();
             window.parent.postMessage('closeModal', '*');
         });
-
-        $('.modal-backdrop').on('click', function(e) {
-            console.log('adadad');
-
-            e.preventDefault();
-            window.parent.postMessage('closeModal', '*');
-        })
     };
 })(jQuery);
