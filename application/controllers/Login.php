@@ -32,10 +32,10 @@ class Login extends CI_Controller
             if ($allowed_range === '*') {
                 return true;
             }
-            die(var_dump($allowed_range));
 
             // Jika terdapat wildcard '*', lakukan perbandingan pola.
             if (strpos($allowed_range, '*') !== false) {
+                die(var_dump($allowed_range));
                 // Mengubah pola wildcard menjadi regex
                 $pattern = str_replace('*', '\d{1,3}', preg_quote($allowed_range, '/'));
                 $pattern = '/^' . $pattern . '$/';
