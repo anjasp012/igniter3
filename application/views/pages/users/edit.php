@@ -92,6 +92,7 @@
         });
 
         $('#btn-delete').click(function() {
+            $('#btn-delete').html(`<div class="spinner-border" style="width: 16px;height: 16px;" role="status"></div>`);
             if (confirm('Are you sure you want to delete?')) {
                 boolChange = false;
                 $.ajax({
@@ -101,6 +102,8 @@
                         window.parent.postMessage('deleteModal', '*');
                     },
                 });
+            } else{
+                $('#btn-delete').html(`Hapus`);
             }
         })
         $('#btn-cancel').click(function() {

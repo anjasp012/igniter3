@@ -128,6 +128,7 @@
     <script>
         // let table;
         $(document).ready(function() {
+            tableReload = $('#reload');
             table = $('#example1').DataTable({
                 "responsive": true,
                 "processing": true,
@@ -156,8 +157,13 @@
                 ],
             });
 
-            $('#reload').on('click', function() {
+            table.on('xhr', function(e, settings, json, xhr) {
+                tableReload.html(`<i class="far fa-circle mr-1"></i>Reload`);
+            });
+
+            tableReload.on('click', function() {
                 table.ajax.reload(); // Memuat ulang data dari server
+                $(this).html(`<div class="spinner-border" style="width: 16px;height: 16px;" role="status"></div>`);
             });
 
 
@@ -187,9 +193,11 @@
                     if (confirm('You have unsaved changes. Are you sure you want to close?')) {
                         bool_change = false; // Reset the flag
                         $('#Modal').modal('hide'); // Close the modal
+                        table.ajax.reload();
                     }
                 } else {
                     $('#Modal').modal('hide'); // Close the modal if no unsaved changes
+                    table.ajax.reload();
                 }
             }
             if (event.data === 'deleteModal') {

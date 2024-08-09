@@ -32,17 +32,20 @@ class Login extends CI_Controller
             if ($allowed_range === '*') {
                 return true;
             }
-            if (strpos($allowed_range, '*') !== false) {
-                $allowed_prefix = str_replace('*', '', $allowed_range);
-                $client_prefix = substr($client_ip, 0, strlen($allowed_prefix));
 
-                if ($client_prefix === $allowed_prefix) {
+            // Jika terdapat wildcard '*', lakukan perbandingan pola.
+            if (strpos($allowed_range, '*') !== false) {
+                // Mengubah pola wildcard menjadi regex
+                $pattern = str_replace('*', '\d{1,3}', preg_quote($allowed_range, '/'));
+                $pattern = '/^' . $pattern . '$/';
+
+                // Cocokkan IP dengan pola yang telah dikonversi
+                if (preg_match($pattern, $client_ip)) {
                     return true;
                 }
             } else {
-                $pattern = str_replace('*', '\d{1,3}', preg_quote($allowed_range, '/'));
-                $pattern = '/^' . $pattern . '$/';
-                if (preg_match($pattern, $client_ip)) {
+                // Jika tidak ada wildcard, lakukan perbandingan langsung
+                if ($client_ip === $allowed_range) {
                     return true;
                 }
             }
