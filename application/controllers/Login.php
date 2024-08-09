@@ -37,6 +37,8 @@ class Login extends CI_Controller
                 $allowed_prefix = str_replace('*', '', $allowed_range);
                 $client_prefix = substr($client_ip, 0, strlen($allowed_prefix));
 
+                die(var_dump($allowed_prefix));
+
                 if ($client_prefix === $allowed_prefix) {
                     return true;
                 }
