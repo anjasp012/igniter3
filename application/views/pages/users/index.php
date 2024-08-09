@@ -127,7 +127,7 @@
     <script src="<?php echo base_url('/assets/js/createModal.js') ?>"></script>
     <script>
         // let table;
-        $(document).ready(function() {
+        $('.content-wrapper').ready(function() {
             tableReload = $('#reload');
             table = $('#example1').DataTable({
                 "responsive": true,
@@ -171,7 +171,7 @@
         var bool_change = false;
         var id = null;
         var baseUrl = '<?php echo base_url(); ?>';
-        $(document).on('click', '.btn-detail', function(e) {
+        $('.content-wrapper').on('click', '.btn-detail', function(e) {
             e.preventDefault();
             var full_name = $(this).data('full_name');
             id = $(this).data('id');

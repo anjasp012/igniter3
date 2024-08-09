@@ -81,7 +81,7 @@
     <script src="<?php echo base_url('/assets/adminLTE/plugins/toastr/toastr.min.js') ?>"></script>
     <script src="<?php echo base_url('/assets/adminLTE/dist/js/adminlte.js') ?>"></script>
     <script>
-        $(document).ready(function() {
+        $('.login-box').ready(function() {
             $("#form-login").submit(function(e) {
                 e.preventDefault();
                 var username = $("#username").val();

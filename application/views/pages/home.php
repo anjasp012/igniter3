@@ -53,59 +53,6 @@
     </div>
 
     <?php $this->load->view("_partials/js.php") ?>
-    <script>
-        $(document).ready(function() {
-            $(".btn-login").click(function() {
-
-                var email = $("#email").val();
-                var password = $("#password").val();
-
-                if (email.length == "") {
-                    toastr.warning('<div class="toast-title">Peringatan</div><div class="toast-message">Silahkan mengisi Email</div>')
-
-                } else if (password.length == "") {
-
-                    toastr.warning('<div class="toast-title">Peringatan</div><div class="toast-message">Silahkan mengisi Password</div>')
-
-                } else {
-
-                    $.ajax({
-
-                        url: "<?php echo base_url() ?>login/check_auth",
-                        type: "POST",
-                        data: {
-                            "email": email,
-                            "password": password
-                        },
-
-                        success: function(response) {
-
-                            if (response == "success") {
-
-                                toastr.success('<div class="toast-title">Login Berhasil!</div><div class="toast-message">Anda akan di arahkan dalam 3 Detik</div>')
-                                setTimeout(function() {
-                                    window.location.href = "<?php echo base_url() ?>";
-                                }, 3000);
-
-                            } else {
-
-                                toastr.error('<div class="toast-title">Peringatan</div><div class="toast-message">silahkan coba lagi</div>')
-                            }
-
-                        },
-
-                        error: function(response) {
-                            toastr.error('<div class="toast-title">Opps</div><div class="toast-message">Server error</div>')
-                        }
-
-                    });
-
-                }
-
-            });
-
-        });
-    </script>
 
 </body>
 
