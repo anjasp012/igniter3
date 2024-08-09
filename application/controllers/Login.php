@@ -33,19 +33,14 @@ class Login extends CI_Controller
                 return true;
             }
 
-            // Jika terdapat wildcard '*', lakukan perbandingan pola.
             if (strpos($allowed_range, '*') !== false) {
-                // Mengubah pola wildcard menjadi regex
                 $allowed_prefix = str_replace('*', '', $allowed_range);
-                // Membandingkan bagian depan IP client dengan bagian depan dari allowed_range
                 $client_prefix = substr($client_ip, 0, strlen($allowed_prefix));
 
                 if ($client_prefix === $allowed_prefix) {
-                    die(var_dump('oke'));
                     return true;
                 }
             } else {
-                // Jika tidak ada wildcard, lakukan perbandingan langsung
                 if ($client_ip === $allowed_range) {
                     return true;
                 }
