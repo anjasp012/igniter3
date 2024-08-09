@@ -33,6 +33,7 @@ class Login extends CI_Controller
             if ($allowed_range === '*') {
                 return true;
             }
+            die(var_dump($allowed_range));
 
             // Jika terdapat wildcard '*', lakukan perbandingan pola.
             if (strpos($allowed_range, '*') !== false) {
