@@ -27,7 +27,6 @@ class Login extends CI_Controller
     private function is_ip_allowed($client_ip, $allowed_ranges)
     {
         $ranges = preg_split('/[,;]\s*/', $allowed_ranges);
-        die(var_dump($ranges));
 
         foreach ($ranges as $allowed_range) {
             if ($allowed_range === '*') {
