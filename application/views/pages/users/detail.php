@@ -5,7 +5,7 @@
     <?php $this->load->view("_partials/head.php") ?>
 </head>
 
-<body>
+<body style="background-color: #7FBBF1;">
     <form id="modal-form" action="<?php echo base_url('users/update/' . $user['id']) ?>" method="post">
         <div class="form-group">
             <label for="login_name">Login name</label>
