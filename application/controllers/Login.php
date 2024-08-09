@@ -35,10 +35,11 @@ class Login extends CI_Controller
 
             // Jika terdapat wildcard '*', lakukan perbandingan pola.
             if (strpos($allowed_range, '*') !== false) {
-                die(var_dump($allowed_range));
                 // Mengubah pola wildcard menjadi regex
                 $pattern = str_replace('*', '\d{1,3}', preg_quote($allowed_range, '/'));
                 $pattern = '/^' . $pattern . '$/';
+
+                die(var_dump($pattern));
 
                 // Cocokkan IP dengan pola yang telah dikonversi
                 if (preg_match($pattern, $client_ip)) {
