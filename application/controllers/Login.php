@@ -29,21 +29,33 @@ class Login extends CI_Controller
         $ranges = preg_split('/[,;]\s*/', $allowed_ranges);
 
         foreach ($ranges as $allowed_range) {
+            // Jika pola adalah wildcard global
             if ($allowed_range === '*') {
                 return true;
             }
 
-            if (strpos($allowed_range, '*') !== false) {
-                $allowed_prefix = str_replace('*', '', $allowed_range);
-                $client_prefix = substr($client_ip, 0, strlen($allowed_prefix));
+            // Menghapus wildcard * dari pola dan IP untuk perbandingan
+            $allowed_parts = explode('.', $allowed_range);
+            $client_parts = explode('.', $client_ip);
 
-                die(var_dump($client_prefix));
+            // Filter out the parts with '*' from allowed_range
+            $filtered_allowed_parts = array_filter($allowed_parts, function ($part) {
+                return $part !== '*';
+            });
 
-                if ($client_prefix === $allowed_prefix) {
-                    return true;
+            // Filter the client IP to match the length of filtered_allowed_parts
+            $filtered_client_parts = array_slice($client_parts, 0, count($filtered_allowed_parts));
+
+            // Memeriksa jika panjang filtered_client_parts cocok dengan filtered_allowed_parts
+            if (count($filtered_client_parts) === count($filtered_allowed_parts)) {
+                $match = true;
+                foreach ($filtered_allowed_parts as $index => $allowed_part) {
+                    if ($filtered_client_parts[$index] !== $allowed_part) {
+                        $match = false;
+                        break;
+                    }
                 }
-            } else {
-                if ($client_ip === $allowed_range) {
+                if ($match) {
                     return true;
                 }
             }
