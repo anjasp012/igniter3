@@ -9,7 +9,7 @@ class Welcome extends CI_Controller
         parent::__construct();
 
         //cek session login
-        if ($this->session->userdata("id_user") != "") {
+        if ($this->session->userdata("id") != "") {
             redirect('/dashboard');
         }
     }
