@@ -77,7 +77,7 @@
                         text: 'No'
                     }
                 },
-                content: '<p>Are you sure you want to delete?</p>',
+                content: '<p>Are you sure you want to delete??</p>',
                 icon: 'error',
                 position: 'center',
                 closeKey: false,
