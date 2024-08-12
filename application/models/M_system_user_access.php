@@ -4,14 +4,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_system_user_access extends CI_model
 {
     protected $table = 'system_user_access';
-    protected $column_order = array(null,'actor_code', 'allow_access', 'create_at');
-    protected $column_search = array('actor_code','allow_access');
+    protected $column_order = array(null, 'actor_code', 'allow_access', 'create_at');
+    protected $column_search = array('actor_code', 'allow_access');
     protected $order = array('actor_code' => 'desc');
 
     private function _get_datatables_query($system_user_id)
     {
         /* query */
-        $this->db->from($this->table)->where('system_user_id', $system_user_id);
+        $this->db->from($this->table)->where('delete_at', null)->where('system_user_id', $system_user_id);
 
         /* search */
         $i = 0;
@@ -49,7 +49,7 @@ class M_system_user_access extends CI_model
     }
     public function count_all($system_user_id)
     {
-        $this->db->from($this->table)->where('system_user_id', $system_user_id);
+        $this->db->from($this->table)->where('delete_at', null)->where('system_user_id', $system_user_id);
         return $this->db->count_all_results();
     }
     function count_filtered($system_user_id)
@@ -74,8 +74,10 @@ class M_system_user_access extends CI_model
     {
         $this->load->helper('url');
         if ($id === null) {
+            $data['create_at'] = date('Y-m-d H:i:s');
             return $this->db->insert($this->table, $data);
         } else {
+            $data['modify_at'] = date('Y-m-d H:i:s');
             $this->db->where('id', $id);
             return $this->db->update($this->table, $data);
         }
@@ -83,48 +85,7 @@ class M_system_user_access extends CI_model
 
     public function delete($id)
     {
-        return $this->db->delete($this->table, array('id' => $id));
-    }
-
-    // fungsi cek login
-    function check_auth($username, $password)
-    {
-        $this->db->select("*");
-        $this->db->from($this->table);
-        $this->db->where("email", $username);
-        $this->db->or_where("login_name", $username);
-        $query = $this->db->get();
-        $user = $query->row();
-
-        /**
-         * Check password
-         */
-        if (!empty($user)) {
-            if (password_verify($password, $user->passwd)) {
-                return $query->result();
-            } else {
-                return FALSE;
-            }
-        } else {
-            return FALSE;
-        }
-    }
-    // fungsi cek login google
-    function check_auth_google($google_id)
-    {
-        $this->db->select("*");
-        $this->db->from($this->table);
-        $this->db->where("google_id", $google_id);
-        $query = $this->db->get();
-        $user = $query->row();
-
-        /**
-         * Check password
-         */
-        if (!empty($user)) {
-            return $query->result();
-        } else {
-            return FALSE;
-        }
+        $this->db->where('id', $id);
+        return $this->db->update($this->table, array('delete_at' => date('Y-m-d H:i:s'), 'delete_by' => $this->session->userdata("id")));
     }
 }

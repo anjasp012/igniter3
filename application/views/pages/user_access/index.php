@@ -25,7 +25,7 @@
                 <th>No</th>
                 <th>Access code</th>
                 <th>Allow access</th>
-                <th>Create at</th>
+                <th>Expired time</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -34,7 +34,7 @@
                 <th>No</th>
                 <th>Access code</th>
                 <th>Allow access</th>
-                <th>Create at</th>
+                <th>Expired time</th>
                 <th>Aksi</th>
             </tr>
         </tfoot>

@@ -52,10 +52,6 @@
         <div class="form-group">
             <label for="allow_access">Allow Access</label>
             <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access" value="<?= $user['allow_access'] ?>">   </div>
-        <div class="form-group">
-            <label for="create_at">Create At</label>
-            <input type="date" class="form-control" name="create_at" id="create_at" placeholder="Create at" value="<?= $user['create_at'] ?>">   </div>
-        </div>
         <div class="d-flex justify-content-between">
             <div>
                 <button id="btn-save" class="btn btn-success" type="submit">Simpan</button>

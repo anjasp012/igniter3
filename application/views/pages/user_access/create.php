@@ -18,8 +18,8 @@
             <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access">
         </div>
         <div class="form-group">
-            <label for="create_at">Create At</label>
-            <input type="date" class="form-control" name="create_at" id="create_at" placeholder="Create at">
+            <label for="expired_time">Expired time</label>
+            <input type="date" class="form-control" name="expired_time" id="expired_time" placeholder="Expired time">
         </div>
         </div>
         <button id="btn-save" class="btn btn-success" type="submit">Simpan</button>

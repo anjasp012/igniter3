@@ -88,6 +88,7 @@ class Users extends CI_Controller
             'date_of_birth' => $this->input->post('date_of_birth') != null ? $this->input->post('date_of_birth') : null,
             'full_address' => $this->input->post('full_address') != null ? $this->input->post('full_address') : null,
             'ip_address' => $this->input->post('ip_address') != null ? $this->input->post('ip_address') : null,
+            'allow_access' => $this->input->post('allow_access') != null ? $this->input->post('allow_access') : null,
             'passwd' => $this->input->post('password') != null ? password_hash($this->input->post('password'), PASSWORD_DEFAULT) : $user['passwd'],
         ];
         $updated = $this->M_system_user->set($id, $data);

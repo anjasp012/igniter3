@@ -34,7 +34,7 @@ public function __construct()
                 $row[]  = $no;
                 $row[]  = $n->actor_code;
                 $row[]  = $n->allow_access;
-                $row[]  = substr($n->create_at, 0, 10);
+                $row[]  = substr($n->expired_time, 0, 10);
                 $row[]  = '
                         <a href="' . base_url('useraccess/detail/') . $system_user_id . '/' . $n->id . '" class="btn btn-sm btn-info btn-detail">Detail</a>
                     ';
@@ -71,7 +71,7 @@ public function __construct()
             'system_user_id' => $system_user_id,
             'actor_code' => $this->input->post('actor_code') != null ? $this->input->post('actor_code') : null,
             'allow_access' => $this->input->post('allow_access') != null ? $this->input->post('allow_access') : null,
-            'create_at' => $this->input->post('create_at') != null ? $this->input->post('create_at') : null,
+            'expired_time' => $this->input->post('expired_time') != null ? $this->input->post('expired_time') : null,
         ];
         $created = $this->M_system_user_access->set(null, $data);
 
@@ -98,7 +98,7 @@ public function __construct()
         $data = [
             'actor_code' => $this->input->post('actor_code') != null ? $this->input->post('actor_code') : null,
             'allow_access' => $this->input->post('allow_access') != null ? $this->input->post('allow_access') : null,
-            'create_at' => $this->input->post('create_at') != null ? $this->input->post('create_at') : null,
+            'expired_time' => $this->input->post('expired_time') != null ? $this->input->post('expired_time') : null,
         ];
         $updated = $this->M_system_user_access->set($id, $data);
         if ($updated) {

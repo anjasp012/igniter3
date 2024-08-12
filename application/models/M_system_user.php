@@ -74,8 +74,10 @@ class M_system_user extends CI_model
     {
         $this->load->helper('url');
         if ($id === null) {
+            $data['create_at'] = date('Y-m-d H:i:s');
             return $this->db->insert($this->table, $data);
         } else {
+            $data['modify_at'] = date('Y-m-d H:i:s');
             $this->db->where('id', $id);
             return $this->db->update($this->table, $data);
         }

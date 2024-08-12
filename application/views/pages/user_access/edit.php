@@ -17,8 +17,8 @@
             <label for="allow_access">Allow Access</label>
             <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access" value="<?= $user_access['allow_access'] ?>">   </div>
         <div class="form-group">
-            <label for="create_at">Create At</label>
-            <input type="date" class="form-control" name="create_at" id="create_at" placeholder="Create at" value="<?= substr($user_access['create_at'], 0, 10) ?>">   </div>
+            <label for="expired_time">Expired time</label>
+            <input type="date" class="form-control" name="expired_time" id="expired_time" placeholder="Expired time" value="<?= substr($user_access['expired_time'], 0, 10) ?>">   </div>
         </div>
         <div class="d-flex justify-content-between">
             <div>
