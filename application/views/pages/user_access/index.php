@@ -16,7 +16,7 @@
 
 <body style="background-color: #86C0E6;">
     <div class="d-flex justify-content-end mb-3">
-        <a href="<?= base_url('access/create/'.$system_user_id) ?>" class="btn btn-primary btn-sm mr-2">Add Access</a>
+        <a href="<?= base_url('useraccess/create/'.$system_user_id) ?>" class="btn btn-primary btn-sm mr-2">Add Access</a>
         <div class="btn btn-dark btn-sm" id="reload"> <i class="far fa-circle mr-1"></i>Reload</div>
     </div>
     <table id="access" class="table table-bordered table-striped">
@@ -65,7 +65,7 @@
                 "order": [],
 
                 "ajax": {
-                    "url": "<?php echo base_url('access/data_table/'. $system_user_id); ?>",
+                    "url": "<?php echo base_url('useraccess/data_table/'. $system_user_id); ?>",
                     "type": "POST"
                 },
 

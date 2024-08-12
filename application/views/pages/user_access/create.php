@@ -8,7 +8,7 @@
 
 <body style="background-color: #86C0E6;">
 
-    <form id="modal-form" action="<?php echo base_url('access/store/' . $system_user_id) ?>" method="post">
+    <form id="modal-form" action="<?php echo base_url('useraccess/store/' . $system_user_id) ?>" method="post">
         <div class="form-group">
             <label for="actor_code">Actor code</label>
             <input type="text" class="form-control" id="actor_code" name="actor_code" placeholder="Actor code">
@@ -43,7 +43,7 @@
                         boolChange = false;
                         $('.btn-save').html(`<i class="fas fa-check"></i>`);
                         $('.btn-save').attr('disabled', true);
-                        window.location = "<?= base_url('access/index/'.$system_user_id) ?>"
+                        window.location = "<?= base_url('useraccess/index/'.$system_user_id) ?>"
                     } else {
                         $('.btn-save').html(`Simpan`);
                     }

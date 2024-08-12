@@ -1,19 +1,19 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Access extends CI_Controller
+class UserAccess extends CI_Controller
 {
     public function __construct()
     {
+
         parent::__construct();
         $this->load->model('M_system_user_access');
         $this->load->helper('url_helper');
         $this->load->helper('url');
     }
 
-    public function index()
+    public function index($id)
     {
-        die(var_dump('wdwdw'));
         $data['system_user_id'] = $id;
         $this->load->view('pages/user_access/index', $data);
     }
@@ -34,7 +34,7 @@ class Access extends CI_Controller
                 $row[]  = $no;
                 $row[]  = $n->actor_code;
                 $row[]  = '
-                        <a href="' . base_url('access/detail/') . $system_user_id . '/' . $n->id . '" class="btn btn-sm btn-info btn-detail">Detail</a>
+                        <a href="' . base_url('useraccess/detail/') . $system_user_id . '/' . $n->id . '" class="btn btn-sm btn-info btn-detail">Detail</a>
                     ';
                 $data[] = $row;
             }
