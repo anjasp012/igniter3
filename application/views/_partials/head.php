@@ -16,3 +16,4 @@
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') ?>">
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/daterangepicker/daterangepicker.css') ?>">
 <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/summernote/summernote-bs4.min.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/fallr-js/css/jquery-fallr-2.0.1.css') ?>" />

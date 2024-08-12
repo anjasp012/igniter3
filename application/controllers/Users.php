@@ -45,6 +45,9 @@ class Users extends CI_Controller
                 $row[]  = '
                         <a data-full_name="'.$n->full_name.'" data-id="'.$n->id.'" class="btn btn-sm btn-info btn-detail">Detail</a>
                     ';
+                $row[]  = '
+                <a data-full_name="'.$n->full_name.'" data-id="'.$n->id.'" class="btn btn-sm btn-dark px-3 btn-akses">List</a>
+                ';
                 $data[] = $row;
             }
 
@@ -88,16 +91,32 @@ class Users extends CI_Controller
             'passwd' => $this->input->post('password') != null ? password_hash($this->input->post('password'), PASSWORD_DEFAULT) : $user['passwd'],
         ];
         $updated = $this->M_system_user->set($id, $data);
-        $response['success'] = true;
-        echo json_encode($response);
-        return;
+        if ($updated) {
+            $response['success'] = true;
+            $response['message'] = "Berhasil mengupdate user";
+            echo json_encode($response);
+            return;
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Gagal mengupdate user";
+            echo json_encode($response);
+            return;
+        }
     }
 
     public function delete($id)
     {
-        $this->M_system_user->delete($id);
-        $response['success'] = true;
-        echo json_encode($response);
-        return;
+        $deleted =$this->M_system_user->delete($id);
+        if ($deleted) {
+            $response['success'] = true;
+            $response['message'] = "Berhasil menghapus user";
+            echo json_encode($response);
+            return;
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Gagal menghapus user";
+            echo json_encode($response);
+            return;
+        }
     }
 }

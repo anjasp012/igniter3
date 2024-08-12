@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') ?> ">
+    <style>
+        #fallr-wrapper{
+            z-index: 9999 !important;
+        }
+        #modal.modal {
+            padding-right: 0px !important;
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
@@ -56,7 +64,7 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <table id="users" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -65,6 +73,7 @@
                                                 <th>Jenis kelamin</th>
                                                 <th>Alamat lengkap</th>
                                                 <th>Aksi</th>
+                                                <th>Akses</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -75,6 +84,7 @@
                                                 <th>Jenis kelamin</th>
                                                 <th>Alamat lengkap</th>
                                                 <th>Aksi</th>
+                                                <th>Akses</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -129,7 +139,7 @@
         // let table;
         $('.content-wrapper').ready(function() {
             tableReload = $('#reload');
-            table = $('#example1').DataTable({
+            table = $('#users').DataTable({
                 "responsive": true,
                 "processing": true,
                 "serverSide": true,
@@ -146,7 +156,7 @@
                 },
 
                 "columnDefs": [{
-                    "targets": [0,5],
+                    "targets": [0, 5],
                     "orderable": false,
                     "className": 'text-center',
                 }],
@@ -190,11 +200,30 @@
             }
             if (event.data === 'closeModal') {
                 if (bool_change) {
-                    if (confirm('You have unsaved changes. Are you sure you want to close?')) {
+                    var closeModal = function() {
                         bool_change = false; // Reset the flag
                         $('#Modal').modal('hide'); // Close the modal
                         table.ajax.reload();
-                    }
+                        $.fallr.hide();
+                    };
+
+                    $.fallr.show({
+                        buttons: {
+                            button1: {
+                                text: 'Yes',
+                                danger: true,
+                                onclick: closeModal
+                            },
+                            button2: {
+                                text: 'No'
+                            }
+                        },
+                        content: '<p>You have unsaved changes. Are you sure you want to close?</p>',
+                        icon: 'error',
+                        position: 'center',
+                        closeKey: false,
+                        useOverlay: false
+                    });
                 } else {
                     $('#Modal').modal('hide'); // Close the modal if no unsaved changes
                     table.ajax.reload();
@@ -209,6 +238,20 @@
                 $('#Modal').modal('hide'); // Close the modal
                 table.ajax.reload();
             }
+        });
+
+        $('.content-wrapper').on('click', '.btn-akses', function(e) {
+            e.preventDefault();
+            var full_name = $(this).data('full_name');
+            id = $(this).data('id');
+            var iframe = `<object type="text/html" data="${baseUrl}useraccess/index/${id}" width="100%" height="99%">No Support</object>`;
+            $.createModal({
+                title: `List akses ${full_name}`,
+                message: iframe,
+                closeButton: false,
+                editButton: true,
+                scrollable: true
+            });
         });
     </script>
 

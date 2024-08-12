@@ -1,5 +1,5 @@
-(function($) {
-    $.createModal = function(options) {
+(function ($) {
+    $.createModal = function (options) {
         // Default options
         var settings = $.extend({
             title: "",
@@ -12,7 +12,7 @@
         var modalHtml = `
             <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
                 <div class="modal-dialog full_modal-dialog ${settings.scrollable ? 'modal-dialog-scrollable' : ''}">
-                    <form class="modal-content full_modal-content">
+                    <div class="modal-content full_modal-content">
                         <div class="modal-header">
                             ${settings.title ? `<h5 class="modal-title">${settings.title}</h5>` : ''}
                             <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
@@ -20,7 +20,7 @@
                         <div class="modal-body">
                             ${settings.message}
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         `;
@@ -33,21 +33,21 @@
         });
 
         // Event listener for modal close
-        $modal.on('hidden.bs.modal', function() {
+        $modal.on('hidden.bs.modal', function () {
             $(this).remove();
         });
 
 
-          // Mengatasi penutupan modal secara manual (misalnya tombol tutup)
-          $modal.on('hidePrevented.bs.modal', function(e) {
+        // Mengatasi penutupan modal secara manual (misalnya tombol tutup)
+        $modal.on('hidePrevented.bs.modal', function (e) {
             e.preventDefault();
             window.parent.postMessage('closeModal', '*');
 
-          });
+        });
 
 
         // Handle close button click
-        $('.close').on('click', function(e) {
+        $('.close').on('click', function (e) {
             e.preventDefault();
             window.parent.postMessage('closeModal', '*');
         });
