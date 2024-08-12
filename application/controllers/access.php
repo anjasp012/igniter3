@@ -12,8 +12,9 @@ class Access extends CI_Controller
         $this->load->helper('url');
     }
 
-    public function index($id)
+    public function index()
     {
+        die(var_dump('wdwdw'));
         $data['system_user_id'] = $id;
         $this->load->view('pages/user_access/index', $data);
     }
