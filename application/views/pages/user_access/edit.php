@@ -8,7 +8,7 @@
 
 <body style="background-color: #86C0E6;">
 
-    <form id="modal-form" action="<?php echo base_url('useraccess/update/' . $user_access['system_user_id'] . '/' . $user_access['id']) ?>" method="post">
+    <form id="modal-form" action="<?php echo base_url('access/update/' . $user_access['system_user_id'] . '/' . $user_access['id']) ?>" method="post">
         <div class="form-group">
             <label for="actor_code">Actor code</label>
             <input type="text" class="form-control" id="actor_code" name="actor_code" placeholder="Actor code" value="<?= $user_access['actor_code'] ?>">
@@ -45,7 +45,7 @@
                         boolChange = false;
                         $('.btn-save').html(`<i class="fas fa-check"></i>`);
                         $('.btn-save').attr('disabled', true);
-                        window.location = "<?= base_url('useraccess/index/' . $user_access['system_user_id']) ?>"
+                        window.location = "<?= base_url('access/index/' . $user_access['system_user_id']) ?>"
                     } else {
                         $('.btn-save').html(`Simpan`);
                     }
@@ -57,7 +57,7 @@
                 boolChange = false;
                 $('#btn-delete').html(`<div class="spinner-border" style="width: 16px;height: 16px;" role="status"></div>`);
                 $.ajax({
-                    url: `<?php echo base_url('useraccess/delete/'.$user_access['system_user_id']. '/'. $user_access['id']); ?>`,
+                    url: `<?php echo base_url('access/delete/'.$user_access['system_user_id']. '/'. $user_access['id']); ?>`,
                     dataType: 'json',
                     success: function(response) {
                         window.parent.postMessage('deleteModal', '*');

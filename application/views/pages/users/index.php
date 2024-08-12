@@ -244,7 +244,7 @@
             e.preventDefault();
             var full_name = $(this).data('full_name');
             id = $(this).data('id');
-            var iframe = `<object type="text/html" data="${baseUrl}useraccess/index/${id}" width="100%" height="99%">No Support</object>`;
+            var iframe = `<object type="text/html" data="${baseUrl}access/index/${id}" width="100%" height="99%">No Support</object>`;
             $.createModal({
                 title: `List akses ${full_name}`,
                 message: iframe,

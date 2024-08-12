@@ -12,7 +12,7 @@
             <label for="actor_code">Actor code</label>
             <input type="text" class="form-control" id="actor_code" name="actor_code" placeholder="Actor code" disabled value="<?= $user_access['actor_code'] ?>">
         </div>
-        <a href="<?= base_url('useraccess/edit/' . $user_access['system_user_id'] . '/' . $user_access['id']) ?>" class="btn btn-warning">Edit</a>
+        <a href="<?= base_url('access/edit/' . $user_access['system_user_id'] . '/' . $user_access['id']) ?>" class="btn btn-warning">Edit</a>
     </form>
 
     <?php $this->load->view("_partials/js.php") ?>

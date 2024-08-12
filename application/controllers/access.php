@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class UserAccess extends CI_Controller
+class Access extends CI_Controller
 {
     public function __construct()
     {
@@ -34,7 +34,7 @@ class UserAccess extends CI_Controller
                 $row[]  = $no;
                 $row[]  = $n->actor_code;
                 $row[]  = '
-                        <a href="' . base_url('useraccess/detail/') . $system_user_id . '/' . $n->id . '" class="btn btn-sm btn-info btn-detail">Detail</a>
+                        <a href="' . base_url('access/detail/') . $system_user_id . '/' . $n->id . '" class="btn btn-sm btn-info btn-detail">Detail</a>
                     ';
                 $data[] = $row;
             }
