@@ -5,7 +5,6 @@ class Access extends CI_Controller
 {
     public function __construct()
     {
-
         parent::__construct();
         $this->load->model('M_system_user_access');
         $this->load->helper('url_helper');
