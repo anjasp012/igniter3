@@ -13,6 +13,15 @@
             <label for="actor_code">Actor code</label>
             <input type="text" class="form-control" id="actor_code" name="actor_code" placeholder="Actor code">
         </div>
+        <div class="form-group">
+            <label for="allow_access">Allow Access</label>
+            <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access">
+        </div>
+        <div class="form-group">
+            <label for="create_at">Create At</label>
+            <input type="date" class="form-control" name="create_at" id="create_at" placeholder="Create at">
+        </div>
+        </div>
         <button id="btn-save" class="btn btn-success" type="submit">Simpan</button>
         <button id="btn-cancel" type="button" class="btn btn-secondary">Batal</button>
     </form>
@@ -43,7 +52,7 @@
                         boolChange = false;
                         $('.btn-save').html(`<i class="fas fa-check"></i>`);
                         $('.btn-save').attr('disabled', true);
-                        window.location = "<?= base_url('useraccess/index/'.$system_user_id) ?>"
+                        window.location = "<?= base_url('useraccess/index/' . $system_user_id) ?>"
                     } else {
                         $('.btn-save').html(`Simpan`);
                     }

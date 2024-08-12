@@ -12,6 +12,13 @@
             <label for="actor_code">Actor code</label>
             <input type="text" class="form-control" id="actor_code" name="actor_code" placeholder="Actor code" disabled value="<?= $user_access['actor_code'] ?>">
         </div>
+        <div class="form-group">
+            <label for="allow_access">Allow Access</label>
+            <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access" value="<?= $user_access['allow_access'] ?>">   </div>
+        <div class="form-group">
+            <label for="create_at">Create At</label>
+            <input type="date" class="form-control" name="create_at" id="create_at" placeholder="Create at" value="<?= substr($user_access['create_at'], 0, 10) ?>">   </div>
+        </div>
         <a href="<?= base_url('useraccess/edit/' . $user_access['system_user_id'] . '/' . $user_access['id']) ?>" class="btn btn-warning">Edit</a>
     </form>
 

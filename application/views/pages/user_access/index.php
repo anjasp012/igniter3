@@ -23,14 +23,18 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Access_code</th>
+                <th>Access code</th>
+                <th>Allow access</th>
+                <th>Create at</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tfoot>
             <tr>
                 <th>No</th>
-                <th>Access_code</th>
+                <th>Access code</th>
+                <th>Allow access</th>
+                <th>Create at</th>
                 <th>Aksi</th>
             </tr>
         </tfoot>

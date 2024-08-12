@@ -4,8 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_system_user_access extends CI_model
 {
     protected $table = 'system_user_access';
-    protected $column_order = array(null,'actor_code');
-    protected $column_search = array('actor_code');
+    protected $column_order = array(null,'actor_code', 'allow_access', 'create_at');
+    protected $column_search = array('actor_code','allow_access');
     protected $order = array('actor_code' => 'desc');
 
     private function _get_datatables_query($system_user_id)

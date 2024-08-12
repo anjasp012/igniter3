@@ -13,9 +13,21 @@
             <label for="actor_code">Actor code</label>
             <input type="text" class="form-control" id="actor_code" name="actor_code" placeholder="Actor code" value="<?= $user_access['actor_code'] ?>">
         </div>
-        <button id="btn-save" class="btn btn-success" type="submit">Simpan</button>
-        <button id="btn-cancel" type="button" class="btn btn-secondary">Batal</button>
-        <button id="btn-delete" class="btn btn-danger" type="button">Hapus</button>
+        <div class="form-group">
+            <label for="allow_access">Allow Access</label>
+            <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access" value="<?= $user_access['allow_access'] ?>">   </div>
+        <div class="form-group">
+            <label for="create_at">Create At</label>
+            <input type="date" class="form-control" name="create_at" id="create_at" placeholder="Create at" value="<?= substr($user_access['create_at'], 0, 10) ?>">   </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <button id="btn-save" class="btn btn-success" type="submit">Simpan</button>
+                <button id="btn-cancel" type="button" class="btn btn-secondary">Batal</button>
+
+            </div>
+            <button id="btn-delete" class="btn btn-danger" type="button">Hapus</button>
+        </div>
 
     </form>
 

@@ -49,9 +49,20 @@
             <label for="ip_address">IP Address</label>
             <textarea name="ip_address" id="ip_address" class="form-control" placeholder="IP Address"><?= $user['ip_address'] ?></textarea>
         </div>
-        <button id="btn-save" class="btn btn-success" type="submit">Simpan</button>
-        <button id="btn-cancel" type="button" class="btn btn-secondary">Batal</button>
-        <button id="btn-delete" class="btn btn-danger" type="button">Hapus</button>
+        <div class="form-group">
+            <label for="allow_access">Allow Access</label>
+            <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access" value="<?= $user['allow_access'] ?>">   </div>
+        <div class="form-group">
+            <label for="create_at">Create At</label>
+            <input type="date" class="form-control" name="create_at" id="create_at" placeholder="Create at" value="<?= $user['create_at'] ?>">   </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <button id="btn-save" class="btn btn-success" type="submit">Simpan</button>
+                <button id="btn-cancel" type="button" class="btn btn-secondary">Batal</button>
+            </div>
+            <button id="btn-delete" class="btn btn-danger" type="button">Hapus</button>
+        </div>
     </form>
 
     <?php $this->load->view("_partials/js.php") ?>
