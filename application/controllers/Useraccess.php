@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class UserAccess extends CI_Controller
+class Useraccess extends CI_Controller
 {
-    public function __construct()
+public function __construct()
     {
 
         parent::__construct();
