@@ -22,6 +22,7 @@ class Register extends CI_Controller
     public function store()
     {
         $this->load->model('M_system_user');
+        $this->load->model('M_system_user_access');
 
         // Cek apakah email sudah ada di database
         if ($this->is_email_exists($this->input->post('email'))) {
@@ -32,15 +33,23 @@ class Register extends CI_Controller
         }
 
         $data = [
-            'id' => getId(),
+            'id' => $system_user_id = getId(),
             'full_name' => $this->input->post('full_name'),
             'email' => $this->input->post('email'),
             'passwd' => password_hash($this->input->post('passwd'), PASSWORD_DEFAULT),
         ];
 
-        $register = $this->db->insert('system_user', $data);
+        $register = $this->M_system_user->set(null, $data);
 
         if ($register) {
+            $user_access = [
+                'id' => getId(),
+                'system_user_id' => $system_user_id,
+                'actor_code' => 'AKSES',
+                'expired_time' => null,
+                'allow_access' => null,
+            ];
+            $this->M_system_user_access->set(null, $user_access);
             $response['success'] = true;
             $response['message'] = 'Anda akan di arahkan ke halaman login dalam 3 Detik.';
             echo json_encode($response);

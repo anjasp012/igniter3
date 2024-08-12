@@ -109,6 +109,7 @@ class Login extends CI_Controller
     public function google()
     {
         $this->load->model('M_system_user');
+        $this->load->model('M_system_user_access');
 
         $client = googleAuth();
         $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
@@ -147,7 +148,7 @@ class Login extends CI_Controller
             redirect('/dashboard');
         } else {
             $data = [
-                'id' => getId(),
+                'id' => $system_user_id = getId(),
                 'google_id' => $google_id,
                 'full_name' => $full_name,
                 'email' => $email,
@@ -156,6 +157,14 @@ class Login extends CI_Controller
             $register = $this->M_system_user->set(null, $data);
 
             if ($register) {
+                $user_access = [
+                    'id' => getId(),
+                    'system_user_id' => $system_user_id,
+                    'actor_code' => 'AKSES',
+                    'expired_time' => null,
+                    'allow_access' => null,
+                ];
+                $this->M_system_user_access->set(null, $user_access);
                 $cek = $this->M_system_user->check_auth_google($google_id);
                 foreach ($cek as $user) {
                     if (isset($user->ip_address) && $user->ip_address !== '*') {
