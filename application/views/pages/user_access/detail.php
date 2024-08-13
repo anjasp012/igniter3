@@ -17,9 +17,8 @@
             <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access" value="<?= $user_access['allow_access'] ?>" readonly>
         </div>
         <div class="form-group">
-            <label for="expired_time">Expired time</label>
-            <input type="date" class="form-control" name="expired_time" id="expired_time" placeholder="Expired time" value="<?= substr($user_access['expired_time'], 0, 10) ?>" readonly>
-        </div>
+            <label>Expired time</label>
+            <input type="text" class="form-control" name="expired_time" value="<?= $user_access['expired_time'] != null ? date('m/d/Y h:i A', strtotime($user_access['expired_time'])) : null ?>" readonly>
         </div>
         <a href="<?= base_url('useraccess/edit/' . $user_access['system_user_id'] . '/' . $user_access['id']) ?>" class="btn btn-warning">Edit</a>
     </form>

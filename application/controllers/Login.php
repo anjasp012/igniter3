@@ -91,6 +91,7 @@ class Login extends CI_Controller
                     'id'   => $user->id,
                     'email'  => $user->email,
                     'full_name' => $user->full_name,
+                    'ip_address' => getClientIP(),
                 );
                 //buat session berdasarkan user yang login
                 $this->session->set_userdata($session_data);
@@ -141,6 +142,7 @@ class Login extends CI_Controller
                     'id'   => $user->id,
                     'email'  => $user->email,
                     'full_name' => $user->full_name,
+                    'ip_address' => getClientIP(),
                 );
                 //buat session berdasarkan user yang login
                 $this->session->set_userdata($session_data);
@@ -182,6 +184,7 @@ class Login extends CI_Controller
                         'id'   => $user->id,
                         'email'  => $user->email,
                         'full_name' => $user->full_name,
+                        'ip_address' => getClientIP(),
                     );
                     //buat session berdasarkan user yang login
                     $this->session->set_userdata($session_data);

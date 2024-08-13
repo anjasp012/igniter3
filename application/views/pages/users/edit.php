@@ -3,7 +3,8 @@
 
 <head>
     <?php $this->load->view("_partials/head.php") ?>
-    <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') ?> ">
+    <link rel="stylesheet" href="<?php echo base_url('/assets/adminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') ?> ">
+
 </head>
 
 <body style="background-color: #86C0E6;">
@@ -39,7 +40,12 @@
         </div>
         <div class="form-group">
             <label for="date_of_birth">Tanggal lahir</label>
-            <input type="date" name="date_of_birth" id="date_of_birth" class="form-control" placeholder="Full address" value="<?= $user['date_of_birth'] ?>">
+            <div class="input-group date" id="date_of_birth" data-target-input="nearest">
+                <div class="input-group-prepend" data-target="#date_of_birth" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+                <input type="text" name="date_of_birth" data-target="#date_of_birth" data-toggle="datetimepicker" class="form-control datetimepicker-input" data-target="#date_of_birth" value="<?= $user['date_of_birth'] != null ? date('d-m-Y', strtotime($user['date_of_birth'])) : null ?>">
+            </div>
         </div>
         <div class="form-group">
             <label for="full_address">Full adress</label>
@@ -51,7 +57,8 @@
         </div>
         <div class="form-group">
             <label for="allow_access">Allow Access</label>
-            <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access" value="<?= $user['allow_access'] ?>">   </div>
+            <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access" value="<?= $user['allow_access'] ?>">
+        </div>
         <div class="d-flex justify-content-between">
             <div>
                 <button id="btn-save" class="btn btn-success" type="submit">Simpan</button>
@@ -62,10 +69,14 @@
     </form>
 
     <?php $this->load->view("_partials/js.php") ?>
-    <script src="<?php echo base_url('/assets/adminLTE/plugins/sweetalert2/sweetalert2.min.js') ?>"></script>
-
+    <script src="<?php echo base_url('/assets/adminLTE/plugins/moment/moment.min.js') ?>"></script>
+    <script src="<?php echo base_url('/assets/adminLTE/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') ?>"></script>
     <script>
         var boolChange = false;
+
+        $('#date_of_birth').datetimepicker({
+            format: 'DD-MM-YYYY'
+        });
 
         // Detect changes in form fields
         $('#modal-form input, #modal-form select, #modal-form textarea').on('change', function() {

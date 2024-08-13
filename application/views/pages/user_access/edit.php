@@ -15,11 +15,18 @@
         </div>
         <div class="form-group">
             <label for="allow_access">Allow Access</label>
-            <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access" value="<?= $user_access['allow_access'] ?>">   </div>
-        <div class="form-group">
-            <label for="expired_time">Expired time</label>
-            <input type="date" class="form-control" name="expired_time" id="expired_time" placeholder="Expired time" value="<?= substr($user_access['expired_time'], 0, 10) ?>">   </div>
+            <input type="text" class="form-control" name="allow_access" id="allow_access" placeholder="Allow Access" value="<?= $user_access['allow_access'] ?>">
         </div>
+        <div class="form-group">
+            <label>Expired time</label>
+            <div class="input-group date" id="expired_time" data-target-input="nearest">
+                <div class="input-group-prepend" data-target="#expired_time" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+                <input type="text" class="form-control datetimepicker-input" data-target="#expired_time" data-toggle="datetimepicker" name="expired_time" value="<?= $user_access['expired_time'] != null ? date('m/d/Y h:i A', strtotime($user_access['expired_time'])) : null ?>">
+            </div>
+        </div>
+
         <div class="d-flex justify-content-between">
             <div>
                 <button id="btn-save" class="btn btn-success" type="submit">Simpan</button>
@@ -32,8 +39,18 @@
     </form>
 
     <?php $this->load->view("_partials/js.php") ?>
+    <script src="<?php echo base_url('/assets/adminLTE/plugins/moment/moment.min.js') ?>"></script>
+    <script src="<?php echo base_url('/assets/adminLTE/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') ?>"></script>
+
     <script>
         var boolChange = false;
+
+        //Date and time picker
+        $('#expired_time').datetimepicker({
+            icons: {
+                time: 'far fa-clock'
+            }
+        });
 
         // Detect changes in form fields
         $('#modal-form input').on('change', function() {
@@ -69,7 +86,7 @@
                 boolChange = false;
                 $('#btn-delete').html(`<div class="spinner-border" style="width: 16px;height: 16px;" role="status"></div>`);
                 $.ajax({
-                    url: `<?php echo base_url('useraccess/delete/'.$user_access['system_user_id']. '/'. $user_access['id']); ?>`,
+                    url: `<?php echo base_url('useraccess/delete/' . $user_access['system_user_id'] . '/' . $user_access['id']); ?>`,
                     dataType: 'json',
                     success: function(response) {
                         window.parent.postMessage('deleteModal', '*');

@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Useraccess extends CI_Controller
 {
-public function __construct()
+    public function __construct()
     {
 
         parent::__construct();
@@ -34,7 +34,7 @@ public function __construct()
                 $row[]  = $no;
                 $row[]  = $n->actor_code;
                 $row[]  = $n->allow_access;
-                $row[]  = substr($n->expired_time, 0, 10);
+                $row[]  = $n->expired_time!= null ? date('m/d/Y h:i A', strtotime($n->expired_time)) : null;
                 $row[]  = '
                         <a href="' . base_url('useraccess/detail/') . $system_user_id . '/' . $n->id . '" class="btn btn-sm btn-info btn-detail">Detail</a>
                     ';
@@ -87,14 +87,15 @@ public function __construct()
             return;
         }
     }
-    public function edit($system_user_id,$id)
+    public function edit($system_user_id, $id)
     {
         //load view form login
         $data['user_access'] = $this->M_system_user_access->get($id);
         $this->load->view('pages/user_access/edit', $data);
     }
-    public function update($system_user_access,$id)
+    public function update($system_user_access, $id)
     {
+        // die(var_dump($this->input->post('expired_time')));
         $data = [
             'actor_code' => $this->input->post('actor_code') != null ? $this->input->post('actor_code') : null,
             'allow_access' => $this->input->post('allow_access') != null ? $this->input->post('allow_access') : null,
@@ -114,7 +115,7 @@ public function __construct()
         }
     }
 
-    public function delete($system_user_access,$id)
+    public function delete($system_user_access, $id)
     {
         $deleted = $this->M_system_user_access->delete($id);
         if ($deleted) {

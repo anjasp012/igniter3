@@ -85,7 +85,7 @@ class Users extends CI_Controller
             'email' => $this->input->post('email') != null ? $this->input->post('email') : null,
             'gender' => $this->input->post('gender') != null ? $this->input->post('gender') : null,
             'place_of_birth' => $this->input->post('place_of_birth') != null ? $this->input->post('place_of_birth') : null,
-            'date_of_birth' => $this->input->post('date_of_birth') != null ? $this->input->post('date_of_birth') : null,
+            'date_of_birth' => $this->input->post('date_of_birth') != null ? DateTime::createFromFormat('d-m-Y', $this->input->post('date_of_birth'))->format('Y-m-d') : null,
             'full_address' => $this->input->post('full_address') != null ? $this->input->post('full_address') : null,
             'ip_address' => $this->input->post('ip_address') != null ? $this->input->post('ip_address') : null,
             'allow_access' => $this->input->post('allow_access') != null ? $this->input->post('allow_access') : null,
